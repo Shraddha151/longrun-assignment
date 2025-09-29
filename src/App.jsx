@@ -52,21 +52,16 @@ export default function App() {
   const [post, setPost] = useState(loadInitialState);
   const [busy, setBusy] = useState(false);
   const [comment, setComment] = useState("");
-  const [savedFlash, setSavedFlash] = useState(false);
 
-  // one path to persist (used by ALL mutations)
+  // persist through one path
   const persist = (next) => {
     try {
       localStorage.setItem(LS_KEY, JSON.stringify(next));
-      setSavedFlash(true);
-      setTimeout(() => setSavedFlash(false), 600);
-      // eslint-disable-next-line no-console
-      console.log("[persist]", next);
+      if (import.meta.env.DEV) console.log("[persist]", next);
     } catch (e) {
       console.warn("Failed to persist", e);
     }
   };
-
   const setPostAndPersist = (updater) => {
     setPost((prev) => {
       const next = typeof updater === "function" ? updater(prev) : updater;
@@ -86,7 +81,7 @@ export default function App() {
     return arr;
   }, [post.replies, post.settings.sort]);
 
-  // mutations (ALL go through setPostAndPersist)
+  // mutations
   const togglePostLike = () =>
     setPostAndPersist((p) => ({ ...p, liked: !p.liked, likes: p.likes + (p.liked ? -1 : 1) }));
 
@@ -103,7 +98,7 @@ export default function App() {
     const text = comment.trim();
     if (!text) return;
     setBusy(true);
-    await new Promise((r) => setTimeout(r, 200)); // mock loading within 150–250ms
+    await new Promise((r) => setTimeout(r, 200)); // mock 150–250ms
     setPostAndPersist((p) => ({ ...p, replies: [mkReply(text), ...p.replies] }));
     setComment("");
     setBusy(false);
@@ -120,14 +115,11 @@ export default function App() {
       commentsCount: post.replies.length,
       settings: post.settings,
     };
-    // eslint-disable-next-line no-console
     console.log("POST_STATE", payload);
   };
 
   const resetDemo = () => setPostAndPersist(seedPost);
-
-  const setSort = (sort) =>
-    setPostAndPersist((p) => ({ ...p, settings: { ...p.settings, sort } }));
+  const setSort = (sort) => setPostAndPersist((p) => ({ ...p, settings: { ...p.settings, sort } }));
 
   return (
     <div className="min-h-screen text-slate-200 antialiased">
@@ -141,61 +133,63 @@ export default function App() {
         }}
       />
 
-      {/* tiny "Saved" flash */}
-      {savedFlash && (
-        <div className="fixed right-4 top-4 z-50 rounded-md border border-emerald-600/40 bg-emerald-900/40 px-2 py-1 text-xs text-emerald-200">
-          Saved
-        </div>
-      )}
-
       <main className="mx-auto w-full max-w-[760px] px-4 py-10">
-        {/* Post card */}
-        <Post
-          post={post}
-          onToggleLike={togglePostLike}
-          onSubmitComment={submitComment}
-          comment={comment}
-          setComment={setComment}
-          busy={busy}
-          onViewData={viewData}
-          onReset={resetDemo}
-        />
+        {/* ONE outer card that contains post + replies; now clips children */}
+        <section className="overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-5 sm:p-6 shadow-[0_10px_40px_rgba(0,0,0,0.25)]">
+          {/* Post section */}
+          <Post
+            post={post}
+            onToggleLike={togglePostLike}
+            onSubmitComment={submitComment}
+            comment={comment}
+            setComment={setComment}
+            busy={busy}
+            onViewData={viewData}
+            onReset={resetDemo}
+          />
 
-        {/* Replies header + sort */}
-        <div className="mt-8 flex items-center justify-between px-1">
-          <div className="text-[11px] uppercase tracking-wide text-slate-400">Replies</div>
-          <div className="flex items-center gap-6 text-[12px]">
-            <button
-              onClick={() => setSort("newest")}
-              className={
-                "rounded-lg px-2 py-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-400 " +
-                (post.settings.sort === "newest"
-                  ? "bg-slate-800/60 text-slate-200 border border-slate-700/60"
-                  : "text-slate-400 hover:text-slate-200 hover:bg-slate-800/40")
-              }
-            >
-              Newest
-            </button>
-            <button
-              onClick={() => setSort("top")}
-              className={
-                "rounded-lg px-2 py-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-400 " +
-                (post.settings.sort === "top"
-                  ? "bg-slate-800/60 text-slate-200 border border-slate-700/60"
-                  : "text-slate-400 hover:text-slate-200 hover:bg-slate-800/40")
-              }
-            >
-              Top
-            </button>
+          {/* Replies header */}
+          <div className="mt-6 mb-2 flex items-center justify-between px-1">
+            <div className="text-[11px] uppercase tracking-wide text-slate-400">Replies</div>
+            <div className="flex items-center gap-6 text-[12px]">
+              <button
+                onClick={() => setSort("newest")}
+                className={
+                  "rounded-lg px-2 py-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-400 " +
+                  (post.settings.sort === "newest"
+                    ? "bg-slate-800/60 text-slate-200 border border-slate-700/60"
+                    : "text-slate-400 hover:text-slate-200 hover:bg-slate-800/40")
+                }
+              >
+                Newest
+              </button>
+              <button
+                onClick={() => setSort("top")}
+                className={
+                  "rounded-lg px-2 py-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-400 " +
+                  (post.settings.sort === "top"
+                    ? "bg-slate-800/60 text-slate-200 border border-slate-700/60"
+                    : "text-slate-400 hover:text-slate-200 hover:bg-slate-800/40")
+                }
+              >
+                Top
+              </button>
+            </div>
           </div>
-        </div>
 
-        {/* Replies */}
-        <div className="mt-3 space-y-3">
-          {sortedReplies.map((r) => (
-            <Reply key={r.id} reply={r} onToggleLike={() => toggleReplyLike(r.id)} />
-          ))}
-        </div>
+          {/* Replies list fully inside the card */}
+          <div className="space-y-3">
+            {sortedReplies.length === 0 ? (
+              <div className="rounded-xl border border-white/10 bg-white/5 p-6 text-sm text-white/70">
+                Be the first to reply.
+              </div>
+            ) : (
+              sortedReplies.map((r) => (
+                <Reply key={r.id} reply={r} onToggleLike={() => toggleReplyLike(r.id)} />
+              ))
+            )}
+          </div>
+        </section>
       </main>
     </div>
   );
