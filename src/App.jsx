@@ -1,3 +1,4 @@
+// src/App.jsx
 import { useMemo, useState } from "react";
 import Post from "./components/Post.jsx";
 import Reply from "./components/Reply.jsx";
@@ -65,6 +66,7 @@ export default function App() {
       console.warn("Failed to persist", e);
     }
   };
+
   const setPostAndPersist = (updater) => {
     setPost((prev) => {
       const next = typeof updater === "function" ? updater(prev) : updater;
@@ -127,16 +129,6 @@ export default function App() {
   const setSort = (sort) =>
     setPostAndPersist((p) => ({ ...p, settings: { ...p.settings, sort } }));
 
-  const logStorage = () => {
-    try {
-      // eslint-disable-next-line no-console
-      console.log("[localStorage]", LS_KEY, JSON.parse(localStorage.getItem(LS_KEY)));
-      alert("Check the console for localStorage output.");
-    } catch {
-      alert("Could not read localStorage; check console.");
-    }
-  };
-
   return (
     <div className="min-h-screen text-slate-200 antialiased">
       {/* background */}
@@ -157,24 +149,7 @@ export default function App() {
       )}
 
       <main className="mx-auto w-full max-w-[760px] px-4 py-10">
-        {/* tiny debug row */}
-        <div className="mb-3 flex gap-2">
-          <button
-            onClick={logStorage}
-            className="rounded-md border border-slate-700/60 bg-slate-900/50 px-2 py-1 text-xs text-slate-300 hover:bg-slate-800/60"
-            title="Log current localStorage payload"
-          >
-            Log Storage
-          </button>
-          <button
-            onClick={resetDemo}
-            className="rounded-md border border-slate-700/60 bg-slate-900/50 px-2 py-1 text-xs text-slate-300 hover:bg-slate-800/60"
-            title="Reset to demo seed"
-          >
-            Reset Demo
-          </button>
-        </div>
-
+        {/* Post card */}
         <Post
           post={post}
           onToggleLike={togglePostLike}
