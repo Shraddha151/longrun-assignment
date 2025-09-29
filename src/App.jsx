@@ -21,8 +21,7 @@ function mkReply(text) {
 const seedPost = {
   id: "post-1",
   author: { name: "Name Surname", avatar: "" },
-  content:
-    "Lorem ipsum dolor sit amet. Ea labore officia sed eligendi adipisci aut voluptate maxime ut tempore omnis aut molestias quam.",
+content: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere, leo non luctus gravida, nibh elit malesuada nunc, non venenatis justo mi eu augue. Vivamus sodales, nisl sit amet dapibus hendrerit, urna mi tincidunt metus, et hendrerit neque lacus at mi. Sed imperdiet, tortor non ultrices convallis, neque dui molestie velit, vel tristique urna elit nec orci. Cras a quam ut nulla luctus consequat. Maecenas finibus, nunc id lobortis tempor, dui velit posuere est, id feugiat massa tellus non arcu.`,
   createdAt: new Date().toISOString(),
   liked: false,
   likes: 12,

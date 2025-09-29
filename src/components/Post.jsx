@@ -30,7 +30,7 @@ function HeartIcon({ filled = false, size = ICON_SIZE }) {
 
 function ChatIcon({ size = ICON_SIZE }) {
   return (
-     <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+    <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
       <path
         d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4v8Z"
         fill="none"
@@ -121,8 +121,10 @@ export default function Post({
         </div>
       </header>
 
-      {/* Body */}
-      <p className="mb-3 text-[14px] leading-6 text-white/85">{post.content}</p>
+      {/* Body — allow multi-line text */}
+      <p className="mb-3 whitespace-pre-line break-words text-[14px] leading-6 text-white/85">
+        {post.content}
+      </p>
 
       <div
         className="mb-4 h-56 w-full rounded-xl border border-white/10 bg-gradient-to-br from-white/5 to-white/0 [background-image:repeating-linear-gradient(-45deg,rgba(255,255,255,.06)_0_16px,transparent_16px_32px)]"
@@ -153,7 +155,7 @@ export default function Post({
         </div>
       </div>
 
-      {/* Comment input (unchanged) */}
+      {/* Comment input */}
       <form onSubmit={onSubmitComment} className="mb-2">
         <div className="flex items-center gap-2 rounded-2xl border border-white/25 bg-white/[0.025] p-1 pl-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] focus-within:border-white/35">
           <input
