@@ -87,3 +87,9 @@ npm run dev        # starts the Vite dev server
 ### Option B — without npm scripts (use Vite directly)
 npm install
 npx vite
+
+```
+
+### 🌐 Live Demo
+
+https://longrun-assignment.vercel.app/
