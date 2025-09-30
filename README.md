@@ -7,6 +7,8 @@ All changes are saved in the browser so they **survive refresh**.
 ---
 
 ## 🖥️ What you see on the page
+“View Data” (:compass:) and “Reset Demo” (:arrows_counterclockwise:) (top-right)
+
 
 - **Main Post Card**
   - **Author & time** (top-left)
