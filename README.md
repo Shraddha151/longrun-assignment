@@ -88,6 +88,9 @@ npm run dev        # starts the Vite dev server
 npm install
 npx vite
 
+(and of course make sure to download and install all the necessary packages)
+
+
 ```
 
 ### 🌐 Live Demo
