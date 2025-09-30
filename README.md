@@ -7,12 +7,10 @@ All changes are saved in the browser so they **survive refresh**.
 ---
 
 ## 🖥️ What you see on the page
-“View Data” (:compass:) and “Reset Demo” (:arrows_counterclockwise:) (top-right)
-
 
 - **Main Post Card**
   - **Author & time** (top-left)
-  - **“View Data” (🧭)** and **“Reset Demo” (↺)** (top-right)
+  - **“View Data” (◎)** and **“Reset Demo” (↻)** (top-right)
   - **Post text** and a **gray image placeholder**
   - **Action pills** under the post:
     - **Like** (heart + number)
@@ -28,7 +26,7 @@ All changes are saved in the browser so they **survive refresh**.
 
 ---
 
-## 🧭 How everything works
+## ◎ How everything works
 
 ### 1) Add a comment
 1. Type in **“Write a comment…”**.
@@ -52,8 +50,8 @@ All changes are saved in the browser so they **survive refresh**.
 - **Top:** most liked first (`likes` desc). **Tie-break:** newer first.  
 - Your choice is **remembered**.
 
-### 5) View Data (🧭)
-- Click **🧭 View Data** in the post header.  
+### 5) View Data (◎)
+- Click **◎ View Data** in the post header.  
 - The **full state** is printed in your browser console (DevTools → Console):
   - `post` (id, author, content, createdAt)
   - `replies` (array of all comments)
@@ -61,8 +59,8 @@ All changes are saved in the browser so they **survive refresh**.
   - `commentsCount` (same as replies length)
   - `settings` (current sort mode)
 
-### 6) Reset Demo (↺)
-- Click **↺ Reset Demo** to restore the **original example data**.  
+### 6) Reset Demo (↻)
+- Click **↻ Reset Demo** to restore the **original example data**.  
 - This overwrites saved changes (likes/comments) with the starting state.
 
 ---
