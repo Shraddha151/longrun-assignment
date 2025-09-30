@@ -102,11 +102,12 @@ export default function Post({
         </div>
 
         <div className="flex gap-2">
+          {/* ONLY CHANGE: fixed 44×44 buttons for consistent sizing */}
           <button
             type="button"
             onClick={onViewData}
             title="View Data"
-            className="rounded-xl border border-white/12 bg-white/6 p-2 text-white/80 hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-400"
+            className="h-11 w-11 grid place-items-center rounded-xl border border-white/12 bg-white/6 text-white/80 hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-400"
           >
             <CompassIcon />
           </button>
@@ -114,7 +115,7 @@ export default function Post({
             type="button"
             onClick={onReset}
             title="Reset Demo"
-            className="rounded-xl border border-white/12 bg-white/6 p-2 text-white/80 hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-400"
+            className="h-11 w-11 grid place-items-center rounded-xl border border-white/12 bg-white/6 text-white/80 hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-400"
           >
             <ResetIcon />
           </button>
